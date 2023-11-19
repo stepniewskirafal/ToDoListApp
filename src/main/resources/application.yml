@@ -1,0 +1,28 @@
+#setup server port
+server:
+  port: 8080
+
+#setup local h2 database config
+spring:
+  datasource:
+    url: jdbc:h2:file:./h2data/todoapp
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: admin
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
+#setup local h2 console
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+      settings:
+        web-allow-others: false
+
+#setup devtools restart support
+  devtools:
+    restart:
+      additional-exclude: true
