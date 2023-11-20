@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
     <title>ToDoPage</title>
 </head>
 <body>
-    Welcome
+    <div class="container">
+        <h1 class="text-center">ToDoList</h1>
+        <hr />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>Actions</td>
+                    <td>Id</td>
+                    <td>Descriptions</td>
+                    <td>Complete</td>
+                    <td>Created Date</td>
+                    <td>Modified Date</td>
+                </tr>
+            </thead>
+            <tbody th:if="${todoItems}">
+                <tr th:each="item : ${todoItems}">
+                    <td>
+                        <div class="btn btn-group-sm" role="group">
+                            <a class="btn btn-info" th:href="@{/edit/{id} (id=${item.id})}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{/delete/{id} (id=${item.id})}">Delete</a>
+                        </div>
+                    </td>
+                    <td th:text="${item.id}">item_id</td>
+                    <td th:text="${item.description}">item_desc</td>
+                    <td th:text="${item.complete}">item_competed</td>
+                    <td th:text="${item.createdDate}">item_created</td>
+                    <td th:text="${item.modifiedDate}">item_modified</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- DivTable.com -->
+
+    </div>
+
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
