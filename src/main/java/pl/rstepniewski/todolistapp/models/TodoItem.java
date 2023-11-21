@@ -1,20 +1,21 @@
 package pl.rstepniewski.todolistapp.models;
 
+import java.time.Instant;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
-
 @Entity
 @Table(name = "todo_item")
-public class ToDoItem {
+public class TodoItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     @Setter
-    private Long Id;
+    private Long id;
 
     @Getter
     @Setter
@@ -32,10 +33,9 @@ public class ToDoItem {
     @Setter
     private Instant modifiedDate;
 
-    public ToDoItem() {
-    }
+    public TodoItem() {}
 
-    public ToDoItem(String description) {
+    public TodoItem(String description) {
         this.description = description;
         this.complete = false;
         this.createdDate = Instant.now();
@@ -44,12 +44,8 @@ public class ToDoItem {
 
     @Override
     public String toString() {
-        return "ToDoItemJava{" +
-                "Id=" + Id +
-                ", description='" + description + '\'' +
-                ", competed=" + complete +
-                ", createdDate=" + createdDate +
-                ", modifiedDate=" + modifiedDate +
-                '}';
+        return String.format("TodoItem{id=%d, description='%s', complete='%s', createdDate='%s', modifiedDate='%s'}",
+                id, description, complete, createdDate, modifiedDate);
     }
+
 }

@@ -11,25 +11,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import pl.rstepniewski.todolistapp.models.ToDoItem;
-import pl.rstepniewski.todolistapp.repositories.ToDoItemRepository;
+import pl.rstepniewski.todolistapp.models.TodoItem;
+import pl.rstepniewski.todolistapp.repositories.TodoItemRepository;
 
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.Optional;
 
 @Controller
 public class ToDoItemController {
     private final Logger logger = LoggerFactory.getLogger(ToDoItemController.class);
 
     @Autowired
-    private ToDoItemRepository toDoItemRepository;
+    private TodoItemRepository todoItemRepository;
 
     @GetMapping("/")
     public ModelAndView index(){
         logger.debug("request to GET index page");
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("todoItems", toDoItemRepository.findAll());
+        modelAndView.addObject("todoItems", todoItemRepository.findAll());
         modelAndView.addObject("today", Instant.now()
                                                             .atZone(ZoneId.systemDefault())
                                                             .toLocalDate()
@@ -39,19 +38,19 @@ public class ToDoItemController {
     }
 
     @PostMapping("/todo")
-    public String createTodoItem(@Valid ToDoItem toDoItem, BindingResult result, Model model ){
+    public String createTodoItem(@Valid TodoItem toDoItem, BindingResult result, Model model ){
         if (result.hasErrors()){
             return "add-todo-item";
         }
         toDoItem.setCreatedDate(Instant.now());
         toDoItem.setModifiedDate(Instant.now());
-        toDoItemRepository.save(toDoItem);
+        todoItemRepository.save(toDoItem);
         return "redirect:/";
     }
 
     @PostMapping("/todo/{id}")
     public String updateToDoItem(@PathVariable(name = "id") long id,
-                                 @Valid ToDoItem toDoItem,
+                                 @Valid TodoItem toDoItem,
                                  BindingResult result,
                                  Model model){
         if(result.hasErrors()){
@@ -59,7 +58,7 @@ public class ToDoItemController {
             return "update-todo-item";
         }
         toDoItem.setModifiedDate(Instant.now());
-        toDoItemRepository.save(toDoItem);
+        todoItemRepository.save(toDoItem);
         return "redirect:/";
     }
 
