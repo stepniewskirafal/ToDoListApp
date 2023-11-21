@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import pl.rstepniewski.todolistapp.models.ToDoItem;
 import pl.rstepniewski.todolistapp.repositories.ToDoItemRepository;
 
@@ -18,6 +19,13 @@ public class ToDoFormController {
 
     @Autowired
     private ToDoItemRepository toDoItemRepository;
+
+    @GetMapping("/create-todo")
+    public String showCreateForm(ToDoItem todoItem,
+                                 Model model){
+        model.addAttribute("todoItem", new ToDoItem());
+        return "add-todo-item";
+    }
 
     @GetMapping("/edit/{id}")
     String showUpdateForm(@PathVariable long id, Model model){
@@ -37,4 +45,5 @@ public class ToDoFormController {
         toDoItemRepository.delete(toDoItem);
         return "redirect:/";
     }
+
 }

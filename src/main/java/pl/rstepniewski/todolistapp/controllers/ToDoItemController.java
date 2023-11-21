@@ -15,6 +15,7 @@ import pl.rstepniewski.todolistapp.models.ToDoItem;
 import pl.rstepniewski.todolistapp.repositories.ToDoItemRepository;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Optional;
 
 @Controller
@@ -29,7 +30,23 @@ public class ToDoItemController {
         logger.debug("request to GET index page");
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("todoItems", toDoItemRepository.findAll());
+        modelAndView.addObject("today", Instant.now()
+                                                            .atZone(ZoneId.systemDefault())
+                                                            .toLocalDate()
+                                                            .getDayOfWeek()
+                                                            .toString().toLowerCase());
         return modelAndView;
+    }
+
+    @PostMapping("/todo")
+    public String createTodoItem(@Valid ToDoItem toDoItem, BindingResult result, Model model ){
+        if (result.hasErrors()){
+            return "add-todo-item";
+        }
+        toDoItem.setCreatedDate(Instant.now());
+        toDoItem.setModifiedDate(Instant.now());
+        toDoItemRepository.save(toDoItem);
+        return "redirect:/";
     }
 
     @PostMapping("/todo/{id}")

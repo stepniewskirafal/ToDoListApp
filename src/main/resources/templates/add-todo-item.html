@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+    <title>ToDoPage</title>
+</head>
+<body>
+<div class="container">
+    <div class="con-md-6">
+        <h1>A new Todo Item</h1>
+        <form action="#" th:action="@{/todo}" th:object="${todoItem}" method="post">
+            <div class="form-group">
+                <label for="description">Description
+                    <input type="text" th:field="*{description}" class="form-control" name="description" id="description" placeholder="Put here a description">
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success">Add Todo!</button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

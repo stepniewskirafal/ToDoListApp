@@ -11,6 +11,7 @@
     <div class="container">
         <h1 class="text-center">ToDoList</h1>
         <hr />
+        <p th:text="|Happy ${today}!|"></p>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -23,7 +24,7 @@
                 </tr>
             </thead>
             <tbody th:if="${todoItems}">
-                <tr th:each="item : ${todoItems}">
+                <tr th:each="item : ${todoItems}" th:class="${item.complete} ? 'table-success' : 'table-light'">
                     <td>
                         <div class="btn btn-group-sm" role="group">
                             <a class="btn btn-info" th:href="@{/edit/{id} (id=${item.id})}">Edit</a>
@@ -32,14 +33,14 @@
                     </td>
                     <td th:text="${item.id}">item_id</td>
                     <td th:text="${item.description}">item_desc</td>
-                    <td th:text="${item.complete}">item_competed</td>
+                    <td th:text="${item.complete}" >item_competed</td>
                     <td th:text="${item.createdDate}">item_created</td>
                     <td th:text="${item.modifiedDate}">item_modified</td>
                 </tr>
             </tbody>
         </table>
-        <!-- DivTable.com -->
 
+        <p> <a class="btn btn-success" th:href="@{/create-todo}">Add a Todo</a>  </p>
     </div>
 
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
