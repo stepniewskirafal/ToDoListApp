@@ -19,6 +19,7 @@ public class TodoItem {
 
     @Getter
     @Setter
+    @NotBlank(message = "Description is required")
     private String description;
 
     @Getter

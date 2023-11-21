@@ -14,7 +14,9 @@
         <form action="#" th:action="@{/todo}" th:object="${todoItem}" method="post">
             <div class="form-group">
                 <label for="description">Description
-                    <input type="text" th:field="*{description}" class="form-control" name="description" id="description" placeholder="Put here a description">
+                    <input type="text" th:field="*{description}" class="form-control"
+                           name="description" id="description" placeholder="Put here a description">
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
                 </label>
             </div>
             <button type="submit" class="btn btn-success">Add Todo!</button>
