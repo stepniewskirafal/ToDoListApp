@@ -26,6 +26,8 @@ spring:
   devtools:
     restart:
       additional-exclude: true
+  application:
+    name: TodoListApplication
 
 #setup logging level
 logging:
