@@ -54,7 +54,12 @@ public class ToDoItemController {
                                  BindingResult result,
                                  Model model){
         if(result.hasErrors()){
-            toDoItem.setId(id);
+            TodoItem todoItem = todoItemRepository
+                    .findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("ToDoItem id: " + id + "not found"));
+            model.addAttribute("todo", todoItem);
+            model.addAttribute("result", result);
+
             return "update-todo-item";
         }
         toDoItem.setModifiedDate(Instant.now());
