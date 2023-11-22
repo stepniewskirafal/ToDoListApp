@@ -8,42 +8,44 @@
     <title>ToDoPage</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center">ToDoList</h1>
-        <hr />
-        <p th:text="|Happy ${today}!|"></p>
+<div class="container mt-4">
+    <h1 class="text-center font-weight-bold">ToDoList</h1>
+    <h4 class="font-weight-bold" th:text="|Happy ${today}!|"></h4>
+    <div class="table-responsive">
         <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <td>Actions</td>
-                    <td>Id</td>
-                    <td>Descriptions</td>
-                    <td>Complete</td>
-                    <td>Created Date</td>
-                    <td>Modified Date</td>
-                </tr>
+            <thead class="thead-dark">
+            <tr>
+                <th>Actions</th>
+                <th>Id</th>
+                <th>Descriptions</th>
+                <th>Complete</th>
+                <th>Created Date</th>
+                <th>Modified Date</th>
+            </tr>
             </thead>
             <tbody th:if="${todoItems}">
-                <tr th:each="item : ${todoItems}" th:class="${item.complete} ? 'table-success' : 'table-light'">
-                    <td>
-                        <div class="btn btn-group-sm" role="group">
-                            <a class="btn btn-info" th:href="@{/edit/{id} (id=${item.id})}">Edit</a>
-                            <a class="btn btn-danger" th:href="@{/delete/{id} (id=${item.id})}">Delete</a>
-                        </div>
-                    </td>
-                    <td th:text="${item.id}">item_id</td>
-                    <td th:text="${item.description}">item_desc</td>
-                    <td th:text="${item.complete}" >item_competed</td>
-                    <td th:text="${item.createdDate}">item_created</td>
-                    <td th:text="${item.modifiedDate}">item_modified</td>
-                </tr>
+            <tr th:each="item : ${todoItems}" th:class="${item.complete} ? 'table-success' : 'table-light'">
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" th:href="@{/edit/{id} (id=${item.id})}">Edit</a>
+                        <a class="btn btn-danger" th:href="@{/delete/{id} (id=${item.id})}">Delete</a>
+                    </div>
+                </td>
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.description}"></td>
+                <td th:text="${item.complete}"></td>
+                <td th:text="${item.createdDate}"></td>
+                <td th:text="${item.modifiedDate}"></td>
+            </tr>
             </tbody>
         </table>
-
-        <p> <a class="btn btn-success" th:href="@{/create-todo}">Add a Todo</a>  </p>
     </div>
+    <div class="text-center">
+        <a class="btn btn-success mt-3" th:href="@{/create-todo}">Add a Todo</a>
+    </div>
+</div>
 
-    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
