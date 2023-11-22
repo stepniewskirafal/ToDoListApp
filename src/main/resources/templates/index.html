@@ -34,8 +34,8 @@
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.description}"></td>
                 <td th:text="${item.complete}"></td>
-                <td th:text="${item.createdDate}"></td>
-                <td th:text="${item.modifiedDate}"></td>
+                <td th:text="${#temporals.format(item.createdDate, 'yyyy-MM-dd  HH:mm:ss')}"></td>
+                <td th:text="${#temporals.format(item.modifiedDate, 'yyyy-MM-dd  HH:mm:ss')}"></td>
             </tr>
             </tbody>
         </table>
