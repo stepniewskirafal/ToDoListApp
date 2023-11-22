@@ -18,29 +18,38 @@ public class TodoFormController {
     private TodoItemRepository todoItemRepository;
 
     @GetMapping("/create-todo")
-    public String showCreateForm(TodoItem todoItem,
-                                 Model model){
+    public String showCreateForm(TodoItem todoItem, Model model){
+        logger.debug("Entering showCreateForm method");
         model.addAttribute("todoItem", new TodoItem());
+        logger.info("Create form displayed");
         return "add-todo-item";
     }
 
     @GetMapping("/edit/{id}")
     String showUpdateForm(@PathVariable long id, Model model){
+        logger.debug("Entering showUpdateForm method for id: {}", id);
         TodoItem todoItem = todoItemRepository
                 .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ToDoItem id: " + id + "not found"));
+                .orElseThrow(() -> {
+                    logger.error("ToDoItem with id: {} not found", id);
+                    return new IllegalArgumentException("ToDoItem id: " + id + " not found");
+                });
         model.addAttribute("todo", todoItem);
+        logger.info("Update form for id: {} displayed", id);
         return "update-todo-item";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteToDoItem(@PathVariable(name = "id") long id,
-                                 Model model){
+    public String deleteToDoItem(@PathVariable(name = "id") long id, Model model){
+        logger.debug("Entering deleteToDoItem method for id: {}", id);
         TodoItem todoItem = todoItemRepository
                 .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ToDoItem id: " + id + "not found"));
+                .orElseThrow(() -> {
+                    logger.error("ToDoItem with id: {} not found for deletion", id);
+                    return new IllegalArgumentException("ToDoItem id: " + id + " not found");
+                });
         todoItemRepository.delete(todoItem);
+        logger.info("ToDoItem with id: {} deleted", id);
         return "redirect:/";
     }
-
 }

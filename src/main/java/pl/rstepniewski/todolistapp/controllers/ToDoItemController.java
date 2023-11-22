@@ -34,17 +34,21 @@ public class ToDoItemController {
                                                             .toLocalDate()
                                                             .getDayOfWeek()
                                                             .toString().toLowerCase());
+        logger.info("Index page displayed");
         return modelAndView;
     }
 
     @PostMapping("/todo")
     public String createTodoItem(@Valid TodoItem toDoItem, BindingResult result, Model model ){
+        logger.debug("Attempting to create new ToDoItem");
         if (result.hasErrors()){
+            logger.error("Validation errors occurred while creating ToDoItem");
             return "add-todo-item";
         }
         toDoItem.setCreatedDate(Instant.now());
         toDoItem.setModifiedDate(Instant.now());
-        todoItemRepository.save(toDoItem);
+        TodoItem savedTodo = todoItemRepository.save(toDoItem);
+        logger.info("New ToDoItem created successfully id: {}", savedTodo.getId());
         return "redirect:/";
     }
 
@@ -53,7 +57,9 @@ public class ToDoItemController {
                                  @Valid TodoItem toDoItem,
                                  BindingResult result,
                                  Model model){
+        logger.debug("Attempting to update ToDoItem with id: {}", id);
         if(result.hasErrors()){
+            logger.error("Validation errors occurred while updating ToDoItem with id: {}", id);
             TodoItem todoItem = todoItemRepository
                     .findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("ToDoItem id: " + id + "not found"));
@@ -64,6 +70,7 @@ public class ToDoItemController {
         }
         toDoItem.setModifiedDate(Instant.now());
         todoItemRepository.save(toDoItem);
+        logger.info("ToDoItem with id: {} updated successfully", id);
         return "redirect:/";
     }
 
