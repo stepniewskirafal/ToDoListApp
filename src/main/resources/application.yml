@@ -26,3 +26,14 @@ spring:
   devtools:
     restart:
       additional-exclude: true
+
+#setup logging level
+logging:
+  level:
+    root: INFO
+    pl.rstepniewski.todolistapp.controllers: DEBUG
+# Log file configuration
+  file:
+    name: logs/todoapp_log.log
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
